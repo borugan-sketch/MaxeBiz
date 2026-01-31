@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y libpq-dev \
 # Enable mod_rewrite for Apache
 RUN a2enmod rewrite
 
+# Configure Apache to listen on Render's PORT
+RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+
 # Copy public files to web root
 COPY public/ /var/www/html/
 
