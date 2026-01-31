@@ -1,0 +1,14 @@
+{
+    "name": "shoppable/product-page",
+    "description": "Mobile-first shoppable product page with Neon DB",
+    "require": {
+        "php": ">=8.0",
+        "ext-pdo": "*",
+        "ext-pdo_pgsql": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
