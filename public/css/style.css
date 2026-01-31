@@ -1,7 +1,7 @@
 :root {
     --primary: #111;
-    --accent: #25D366; /* WhatsApp Green */
-    --glass: rgba(255, 255, 255, 0.85);
+    --accent: #25D366;
+    --glass: rgba(255, 255, 255, 0.95); /* More opaque for readability */
     --glass-border: rgba(255, 255, 255, 0.5);
     --text: #333;
 }
@@ -63,8 +63,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
     border-radius: 30px; display: flex; align-items: center; gap: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     z-index: 20; cursor: pointer;
-    font-weight: bold;
+    font-weight: bold; transition: transform 0.2s;
 }
+
 .fab-small {
     background: rgba(255,255,255,0.2); backdrop-filter: blur(5px);
     width: 45px; height: 45px; border-radius: 50%;
@@ -93,36 +94,67 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .modal.hidden { visibility: hidden; pointer-events: none; }
 .modal-backdrop {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     opacity: 1; transition: opacity 0.3s;
 }
 .modal.hidden .modal-backdrop { opacity: 0; }
 
 .modal-content {
-    width: 100%; max-height: 85vh;
+    width: 100%; max-height: 90vh;
     background: var(--glass);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
     border-top: 1px solid var(--glass-border);
     border-radius: 24px 24px 0 0;
     padding: 25px;
     overflow-y: auto;
     position: relative;
     transform: translateY(0); transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.1, 1);
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 -5px 30px rgba(0,0,0,0.3);
 }
 .modal.hidden .modal-content { transform: translateY(100%); }
 
 .close-modal {
     position: absolute; top: 20px; right: 20px;
     background: rgba(0,0,0,0.1); border: none; border-radius: 50%;
-    width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;
 }
 
 /* Product Details */
-.product-detail-img { width: 100%; height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 15px; }
-.product-title { font-size: 1.5rem; margin-bottom: 5px; }
-.product-sku { font-size: 0.8rem; color: #666; margin-bottom: 10px; }
-.product-price { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: var(--primary); }
+.modal-top { position: relative; margin-bottom: 20px; text-align: center; }
+.product-detail-img { width: 100%; height: 250px; object-fit: contain; border-radius: 12px; }
+
+/* Badges */
+.badges-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.badge { font-size: 0.75rem; padding: 4px 8px; border-radius: 6px; font-weight: 600; text-transform: uppercase; }
+.badge-brand { background: #333; color: #fff; }
+.badge-category { background: #e0e0e0; color: #333; }
+.badge-attr { border: 1px solid #ccc; color: #555; }
+
+/* Gallery Strip */
+.gallery-strip { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 5px; justify-content: center; }
+.thumb { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.6; }
+.thumb.active { border-color: #000; opacity: 1; }
+
+.product-title { font-size: 1.5rem; margin-bottom: 2px; }
+.product-sku { font-size: 0.8rem; color: #666; margin-bottom: 12px; }
+.product-desc { font-size: 0.95rem; line-height: 1.4; color: #444; margin-bottom: 20px; }
+
+/* Tiered Pricing Table */
+.tier-table { border: 1px solid #eee; border-radius: 8px; overflow: hidden; margin-bottom: 15px; font-size: 0.9rem; }
+.tier-row { display: flex; padding: 8px 12px; border-bottom: 1px solid #eee; }
+.tier-row:last-child { border-bottom: none; }
+.tier-row.header { background: #f5f5f5; font-weight: 600; color: #555; }
+.tier-row span { flex: 1; }
+.tier-row span:last-child { text-align: right; }
+
+/* Qty Control */
+.qty-control { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+.qty-control label { font-size: 0.85rem; font-weight: 600; color: #666; display: block; margin-bottom: 8px; }
+.qty-inputs { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+.qty-inputs button { width: 40px; height: 40px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 1.2rem; cursor: pointer; }
+.qty-inputs input { width: 80px; height: 40px; text-align: center; font-size: 1.1rem; border: 1px solid #ddd; border-radius: 8px; }
+.price-display { font-size: 1.1rem; font-weight: bold; color: var(--primary); text-align: right; margin-top: 5px; }
+
 .variant-selector { margin-bottom: 15px; }
 .variant-btn {
     padding: 8px 16px; border: 1px solid #ccc; background: transparent;
@@ -133,12 +165,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .primary-btn {
     background: #000; color: #fff; border: none; padding: 15px;
     width: 100%; border-radius: 12px; font-size: 1rem; font-weight: bold;
-    cursor: pointer; margin-top: 10px;
+    cursor: pointer;
 }
 .secondary-btn {
-    background: #eee; color: #333; border: none; padding: 8px 12px;
-    border-radius: 8px; font-size: 0.9rem; cursor: pointer;
+    background: #eee; color: #333; border: none; padding: 12px;
+    width: 100%; border-radius: 12px; font-size: 1rem; font-weight: 600;
+    cursor: pointer;
 }
+.full-width { width: 100%; }
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+.mb-10 { margin-bottom: 10px; }
 
 /* Drawers */
 .drawer {
@@ -157,7 +194,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .cart-footer { margin-top: auto; padding-top: 20px; border-top: 1px solid #eee; }
 .cart-summary { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
 
-/* Cart Items */
 .cart-item { display: flex; gap: 10px; margin-bottom: 15px; }
 .cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
 .cart-item-details { flex: 1; }
@@ -171,6 +207,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
     width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;
     font-size: 1rem;
 }
+.radio-group label { display: block; margin-bottom: 8px; font-weight: 400; cursor: pointer; }
 
 /* Support Dropdown */
 .dropdown {
