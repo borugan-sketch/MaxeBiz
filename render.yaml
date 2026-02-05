@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: shoppable-product-page
+    env: php
+    region: oregon
+    plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: heroku-php-apache2 public/
+    envVars:
+      - key: DATABASE_URL
+        sync: false # Connect your Neon Database URL here

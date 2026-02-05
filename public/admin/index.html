@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Admin</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; color: #333; padding: 20px; margin: 0; }
+        .container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background: #f8f9fa; font-weight: 600; color: #555; }
+        tr:hover { background: #f1f1f1; }
+        .status-badge {
+            padding: 4px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: 500;
+            text-transform: capitalize;
+        }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-paid { background: #d4edda; color: #155724; }
+        .status-shipped { background: #cce5ff; color: #004085; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn { padding: 8px 16px; border-radius: 6px; text-decoration: none; background: #333; color: #fff; font-size: 0.9rem; }
+        select { padding: 5px; border-radius: 4px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Orders</h1>
+            <a href="/" class="btn">Back to Site</a>
+        </div>
+        <div id="loading">Loading orders...</div>
+        <table id="orders-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orders-body"></tbody>
+        </table>
+    </div>
+    <script src="../js/admin.js"></script>
+</body>
+</html>
